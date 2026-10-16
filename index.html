@@ -1,80 +1,632 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark" id="top">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
+    <meta name="theme-color" content="#0f172a">
+
+    <title>My Portfolio | Elmer L. Andales</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style type="text/tailwindcss">
+        @custom-variant dark (&:where(.dark, .dark *));
+
+        @layer base {
+            html {
+                scroll-behavior: smooth;
+                scroll-padding-top: 2rem;
+            }
+
+            body {
+                @apply min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100;
+                font-family: Arial, Helvetica, sans-serif;
+                transition: background-color 0.2s ease, color 0.2s ease;
+            }
+
+            ::selection {
+                @apply bg-orange-300 text-slate-950;
+            }
+        }
+
+        @layer components {
+            .btn {
+                @apply inline-flex items-center justify-center rounded-xl
+                bg-slate-900 px-5 py-3 text-sm font-semibold text-white
+                shadow-sm transition-colors duration-150
+                hover:bg-orange-500
+                focus-visible:outline-2 focus-visible:outline-offset-4
+                focus-visible:outline-orange-500
+                dark:bg-slate-800 dark:hover:bg-orange-500;
+            }
+
+            .card {
+                @apply min-w-0 flex-1 rounded-2xl border border-slate-200
+                bg-white p-6 text-left shadow-sm
+                transition-colors duration-150
+                hover:border-orange-300
+                dark:border-slate-800 dark:bg-slate-900
+                dark:hover:border-orange-500;
+            }
+
+            .secondary {
+                @apply border-orange-200 bg-orange-50
+                dark:border-slate-800 dark:bg-slate-900;
+            }
+
+            .link {
+                @apply font-medium text-slate-600 transition-colors duration-150
+                hover:text-orange-500
+                dark:text-slate-300 dark:hover:text-orange-400;
+            }
+
+            .field {
+                @apply w-full rounded-xl border border-slate-200
+                bg-slate-50 px-4 py-3 text-sm text-slate-900
+                outline-none transition-colors duration-150
+                placeholder:text-slate-400
+                focus:border-orange-400 focus:ring-2 focus:ring-orange-100
+                dark:border-slate-700 dark:bg-slate-950
+                dark:text-white dark:placeholder:text-slate-500
+                dark:focus:border-orange-500 dark:focus:ring-orange-950;
+            }
+
+            .section-label {
+                @apply mb-3 inline-block rounded-full
+                bg-orange-100 px-3 py-1 text-xs font-bold
+                uppercase tracking-widest text-orange-700
+                dark:bg-orange-950 dark:text-orange-400;
+            }
+        }
+
+        #toggledark.rotate {
+            animation: rotateButton 0.3s ease-in-out;
+        }
+
+        @keyframes rotateButton {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        #mainNav ul a {
+            text-decoration: none;
+            text-underline-offset: 6px;
+        }
+
+        #mainNav ul a:hover {
+            text-decoration: underline;
+            text-decoration-color: #f97316;
+        }
+
+        #contactForm label {
+            @apply mb-1 text-sm font-semibold text-slate-700
+            dark:text-slate-300;
+        }
+
+        #footer {
+            background-image: linear-gradient(
+                to bottom,
+                rgba(249, 115, 22, 0.035),
+                transparent
+            );
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
 </head>
 
 <body class="text-center">
-    <h1 class="text-3xl font-bold">Elmer L. Andales</h1>
-    <button id="switch" class="bg-black text-white px-3 py-3 rounded-[15px] transition-colors duration-500
-         hover:bg-red-500">
-        Switch
-    </button>
 
-    <header>
-        <h1 class="text-3xl text-red-500 font-bold underline">
-            Hello world!
+    <!-- Theme Buttons -->
+    <div id="themeButtons"
+        class="mx-auto my-6 flex flex-wrap justify-center gap-3 px-4">
+
+        <button id="switch" class="btn" type="button">
+            Switch
+        </button>
+
+        <button id="toggledark" class="btn" type="button">
+            Toggle Dark
+        </button>
+
+        <button id="replayAnimation" class="btn" type="button">
+            Replay Animation
+        </button>
+    </div>
+
+    <!-- Header -->
+    <header class="mx-auto max-w-7xl px-5 pb-8 pt-6 sm:px-8 sm:pb-12">
+
+        <p id="welcomeText"
+            class="mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-orange-500">
+            Welcome to my portfolio
+        </p>
+
+        <h1 id="myName"
+            class="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-6xl dark:text-white">
+            Elmer L.
+            <span class="text-orange-500">Andales</span>
         </h1>
-        <nav class="flex justify-between items-center mx-[50px] max-[600px]:flex-col">
-            <span class="text-green-500 text-[50px]">
-                @andaleselmer
+
+        <h2 id="helloWorld"
+            class="mt-5 text-2xl font-bold text-slate-700 sm:text-3xl dark:text-slate-200">
+            Hello World!
+        </h2>
+
+        <p id="introText"
+            class="mx-auto mt-4 max-w-xl text-sm leading-7 text-slate-600 sm:text-base dark:text-slate-400">
+            Welcome to my personal space on the web. I create websites
+            and systems that focus on functionality, simplicity, and
+            a better user experience.
+        </p>
+
+        <div id="heroButtons"
+            class="mt-6 flex flex-wrap justify-center gap-3">
+
+            <a href="#projects" class="btn">
+                Explore My Work
+            </a>
+
+            <a href="#contact"
+                class="inline-flex items-center justify-center rounded-xl border
+                border-slate-300 px-5 py-3 text-sm font-semibold
+                text-slate-700 transition-colors duration-150
+                hover:border-orange-400 hover:text-orange-500
+                dark:border-slate-700 dark:text-slate-200
+                dark:hover:border-orange-500">
+                Get In Touch
+            </a>
+        </div>
+
+        <!-- Navigation -->
+        <nav id="mainNav"
+            class="mx-auto mt-10 flex max-w-5xl flex-col items-center
+            justify-between gap-5 rounded-2xl border border-slate-200
+            bg-white px-6 py-5 shadow-sm sm:flex-row
+            dark:border-slate-800 dark:bg-slate-900">
+
+            <span id="username"
+                class="text-2xl font-bold tracking-tight sm:text-3xl">
+                <span class="text-orange-500">@</span>elmerandales
             </span>
-            <ul class="flex gap-5 list-none max-[600px]:flex-col">
-                <li><a href="#projects" class="hover:text-red-500">Projects</a></li>
-                <li><a href="#services" class="hover:text-red-300">Services</a></li>
-                <li><a href="#contact" class="hover:text-red-200">Contact Me</a></li>
+
+            <ul class="flex list-none flex-wrap justify-center gap-6">
+                <li><a href="#projects" class="link">Projects</a></li>
+                <li><a href="#services" class="link">Services</a></li>
+                <li><a href="#contact" class="link">Contact Me</a></li>
             </ul>
         </nav>
     </header>
 
-    <main class="flex flex-wrap gap-[30px] p-[50px] m-[50px] max-[600px]:p-[15px]
-     max-[600px]:m-[10px]">
+    <!-- Main Content -->
+    <main class="mx-auto flex max-w-7xl flex-wrap gap-6 px-5 py-8 sm:px-8 sm:py-12 lg:px-12">
+
         <!-- Projects -->
-        <section id="projects" class="flex-1 min-w-[280px] border-2 border-black p-5 
-        bg-orange-400 max-[600px]:min-w-0">
-            <h2 class="max-[768px]:text-[48px] max-[768px]:text-blue-500">
+        <section id="projects" class="card">
+
+            <span class="section-label">01 / My Work</span>
+
+            <h2 class="mb-3 text-2xl font-bold tracking-tight">
                 My Projects
             </h2>
-            <p>
-                Personal portfolio, payroll system, company website,startup website, and compliance monitoring system.
+
+            <p class="mb-6 text-sm leading-7 text-slate-600 dark:text-slate-400">
+                Some of the projects I work on involve building useful
+                websites and systems for different needs.
+            </p>
+
+            <ul class="project-list space-y-3 text-sm leading-6">
+                <li class="flex gap-3">
+                    <span class="font-bold text-orange-500">01.</span>
+                    <span>Personal Portfolio</span>
+                </li>
+
+                <li class="flex gap-3">
+                    <span class="font-bold text-orange-500">02.</span>
+                    <span>Payroll System</span>
+                </li>
+
+                <li class="flex gap-3">
+                    <span class="font-bold text-orange-500">03.</span>
+                    <span>Company Website</span>
+                </li>
+
+                <li class="flex gap-3">
+                    <span class="font-bold text-orange-500">04.</span>
+                    <span>Startup Website</span>
+                </li>
+
+                <li class="flex gap-3">
+                    <span class="font-bold text-orange-500">05.</span>
+                    <span>Compliance Monitoring System</span>
+                </li>
+            </ul>
+
+            <p class="mt-6 border-t border-slate-200 pt-4 text-xs
+                text-slate-500 dark:border-slate-700 dark:text-slate-400">
+                Turning ideas into working projects.
             </p>
         </section>
+
         <!-- Services -->
-        <section id="services" class="flex-1 min-w-[280px] border-2 border-black p-5
-         bg-green-500 max-[600px]:min-w-0">
-            <h2 class="max-[768px]:text-[48px] max-[768px]:text-blue-500">
+        <section id="services" class="card secondary">
+
+            <span class="section-label">02 / What I Do</span>
+
+            <h2 class="mb-3 text-2xl font-bold tracking-tight">
                 My Services
             </h2>
-            <p>
-                Website Creation, System Creation, AI Automation,Database Management, Project Management, Systems
-                Analyst
+
+            <p class="mb-6 text-sm leading-7 text-slate-600 dark:text-slate-400">
+                I enjoy working on digital solutions, from creating
+                websites to developing systems that help simplify tasks.
+            </p>
+
+            <ul class="service-list space-y-3 text-sm leading-6">
+                <li class="flex gap-3">
+                    <span class="font-bold text-orange-500">→</span>
+                    Website Creation
+                </li>
+
+                <li class="flex gap-3">
+                    <span class="font-bold text-orange-500">→</span>
+                    System Development
+                </li>
+
+                <li class="flex gap-3">
+                    <span class="font-bold text-orange-500">→</span>
+                    AI Automation
+                </li>
+
+                <li class="flex gap-3">
+                    <span class="font-bold text-orange-500">→</span>
+                    Database Management
+                </li>
+
+                <li class="flex gap-3">
+                    <span class="font-bold text-orange-500">→</span>
+                    Project Management
+                </li>
+
+                <li class="flex gap-3">
+                    <span class="font-bold text-orange-500">→</span>
+                    Systems Analysis
+                </li>
+            </ul>
+
+            <p class="mt-6 border-t border-orange-200 pt-4 text-xs
+                text-slate-500 dark:border-slate-700 dark:text-slate-400">
+                Simple solutions. Useful results.
             </p>
         </section>
+
         <!-- Contact -->
-        <section id="contact" class="flex-1 min-w-[280px] border-2 border-black p-5 
-        bg-blue-500 max-[600px]:min-w-0">
-            <h2 class="max-[768px]:text-[48px] max-[768px]:text-blue-500">
-                Let's build together!
+        <section id="contact" class="card">
+
+            <span class="section-label">03 / Contact</span>
+
+            <h2 class="mb-3 text-2xl font-bold tracking-tight">
+                Let's Build Together!
             </h2>
-            <form action="#" class="flex flex-col gap-5">
+
+            <p class="mb-6 text-sm leading-7 text-slate-600 dark:text-slate-400">
+                Have an idea or a project in mind? Send me a message
+                and tell me what you would like to build.
+            </p>
+
+            <form id="contactForm" class="flex flex-col gap-3">
+
                 <label for="name">Name</label>
-                <input id="name" name="name" type="text" required class="border border-gray-400 p-2">
+                <input id="name" name="name" type="text"
+                    class="field"
+                    placeholder="Enter your name"
+                    autocomplete="name"
+                    required>
+
                 <label for="email">Email</label>
-                <input id="email" name="email" type="email" required class="border border-gray-400 p-2">
+                <input id="email" name="email" type="email"
+                    class="field"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                    required>
+
                 <label for="message">Message</label>
-                <textarea id="message" name="message" rows="5" required class="border border-gray-400 p-2">
-                </textarea>
-                <button type="submit" class="bg-black text-white p-3 rounded-[15px] hover:bg-red-500">
+                <textarea id="message" name="message" rows="4"
+                    class="field resize-y"
+                    placeholder="Write your message..."
+                    required></textarea>
+
+                <button type="submit" class="btn mt-2 w-full">
                     Send Message
                 </button>
+
+                <p id="formStatus" role="status" aria-live="polite"
+                    class="text-sm leading-6 text-orange-600 dark:text-orange-400">
+                </p>
             </form>
         </section>
     </main>
-    <script src="script.js"></script>
-</body>
 
+    <!-- Footer -->
+    <footer id="footer"
+        class="mt-10 border-t border-slate-200 bg-white
+        px-6 py-10 text-slate-600 dark:border-slate-800
+        dark:bg-slate-900 dark:text-slate-400">
+
+        <h2 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
+            Elmer L. <span class="text-orange-500">Andales</span>
+        </h2>
+
+        <p class="mt-2 text-sm">
+            Web Developer | System Developer
+        </p>
+
+        <nav class="footer-links my-6 flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm">
+            <a href="#projects" class="link">Projects</a>
+            <a href="#services" class="link">Services</a>
+            <a href="#contact" class="link">Contact</a>
+        </nav>
+
+        <div class="mx-auto mt-6 max-w-7xl border-t border-slate-200
+            pt-6 text-xs dark:border-slate-800">
+
+            <p>
+                &copy; <span id="year"></span> Elmer L. Andales.
+                All rights reserved.
+            </p>
+
+            <p class="mt-3 font-medium text-orange-600 dark:text-orange-400">
+                I build this thing, brick by brick!
+            </p>
+        </div>
+
+        <a href="#top"
+            class="sr-only focus:not-sr-only focus:mt-4 focus:inline-block
+            focus:rounded-lg focus:bg-orange-500 focus:px-4 focus:py-2
+            focus:text-white">
+            Back to top
+        </a>
+    </footer>
+
+    <script>
+        const html = document.documentElement;
+        const darkButton = document.getElementById("toggledark");
+        const replayButton = document.getElementById("replayAnimation");
+
+        const reduceMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+        // Fast entrance animations
+        function playAnimations() {
+            if (reduceMotion) {
+                gsap.set([
+                    "#themeButtons",
+                    "#welcomeText",
+                    "#myName",
+                    "#helloWorld",
+                    "#introText",
+                    "#heroButtons a",
+                    "#mainNav",
+                    "#username",
+                    "#mainNav ul li",
+                    "main > section",
+                    "main > section *",
+                    "#contactForm label",
+                    "#contactForm input",
+                    "#contactForm textarea",
+                    "#contactForm button",
+                    "#formStatus",
+                    "#footer > *"
+                ], {
+                    clearProps: "all"
+                });
+
+                return;
+            }
+
+            const tl = gsap.timeline({
+                defaults: {
+                    duration: 0.3,
+                    ease: "power2.out"
+                }
+            });
+
+            tl.from("#themeButtons", {
+                y: -15,
+                opacity: 0,
+                stagger: 0.04,
+                duration: 0.2
+            })
+
+            .from("#welcomeText", {
+                y: 15,
+                opacity: 0,
+                duration: 0.2
+            }, "-=0.1")
+
+            .from("#myName", {
+                y: -30,
+                opacity: 0,
+                duration: 0.5,
+                ease: "back.out(1.4)"
+            }, "-=0.1")
+
+            .from("#helloWorld", {
+                x: -25,
+                opacity: 0,
+                duration: 0.25
+            }, "-=0.3")
+
+            .from("#introText", {
+                y: 15,
+                opacity: 0,
+                duration: 0.25
+            }, "-=0.15")
+
+            .from("#heroButtons a", {
+                y: 15,
+                opacity: 0,
+                stagger: 0.07,
+                duration: 0.25
+            }, "-=0.1")
+
+            .from("#mainNav", {
+                y: 20,
+                opacity: 0,
+                duration: 0.3
+            }, "-=0.1")
+
+            .from("#username", {
+                x: -15,
+                opacity: 0,
+                duration: 0.2
+            }, "-=0.15")
+
+            .from("#mainNav ul li", {
+                y: -10,
+                opacity: 0,
+                stagger: 0.04,
+                duration: 0.2
+            }, "-=0.15")
+
+            .from("main > section", {
+                y: 30,
+                opacity: 0,
+                stagger: 0.08,
+                duration: 0.4
+            }, "-=0.1")
+
+            .from("main > section .section-label", {
+                x: -10,
+                opacity: 0,
+                stagger: 0.04,
+                duration: 0.2
+            }, "-=0.25")
+
+            .from(".project-list li, .service-list li", {
+                x: -10,
+                opacity: 0,
+                stagger: 0.025,
+                duration: 0.2
+            }, "-=0.2")
+
+            .from("#contactForm label, #contactForm input, #contactForm textarea, #contactForm button", {
+                y: 10,
+                opacity: 0,
+                stagger: 0.025,
+                duration: 0.2
+            }, "-=0.2")
+
+            .from("#footer > *", {
+                y: 10,
+                opacity: 0,
+                stagger: 0.04,
+                duration: 0.25
+            }, "-=0.15");
+        }
+
+        // Run the animations on page load.
+        window.addEventListener("load", playAnimations);
+
+        // Replay animations.
+        replayButton.addEventListener("click", playAnimations);
+
+        // Switch theme.
+        document.getElementById("switch").addEventListener("click", () => {
+            html.classList.toggle("dark");
+        });
+
+        // Toggle dark mode.
+        darkButton.addEventListener("click", () => {
+            html.classList.toggle("dark");
+
+            darkButton.classList.remove("rotate");
+            void darkButton.offsetWidth;
+            darkButton.classList.add("rotate");
+        });
+
+        // Update copyright year.
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
+
+        // Contact form demo.
+        document.getElementById("contactForm").addEventListener(
+            "submit",
+            function (event) {
+                event.preventDefault();
+
+                document.getElementById("formStatus").textContent =
+                    "Thank you for your message! Email delivery is not configured yet.";
+
+                this.reset();
+            }
+        );
+
+        // Fast card hover movement.
+        if (!reduceMotion) {
+            document.querySelectorAll(".card").forEach((card) => {
+                card.addEventListener("mouseenter", () => {
+                    gsap.to(card, {
+                        y: -4,
+                        duration: 0.12,
+                        ease: "power1.out",
+                        overwrite: "auto"
+                    });
+                });
+
+                card.addEventListener("mouseleave", () => {
+                    gsap.to(card, {
+                        y: 0,
+                        duration: 0.12,
+                        ease: "power1.out",
+                        overwrite: "auto"
+                    });
+                });
+            });
+
+            // Fast button hover movement.
+            document.querySelectorAll(".btn").forEach((button) => {
+                button.addEventListener("mouseenter", () => {
+                    gsap.to(button, {
+                        y: -2,
+                        duration: 0.1,
+                        ease: "power1.out",
+                        overwrite: "auto"
+                    });
+                });
+
+                button.addEventListener("mouseleave", () => {
+                    gsap.to(button, {
+                        y: 0,
+                        duration: 0.1,
+                        ease: "power1.out",
+                        overwrite: "auto"
+                    });
+                });
+            });
+        }
+    </script>
+
+</body>
 </html>
